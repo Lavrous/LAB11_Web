@@ -1,0 +1,23 @@
+{% extends 'irezumi/base.html' %}
+
+{% block breadcrumbs %}
+    <li>Мастера {{ century }} века</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Мастера японской татуировки {{ century }}-го века</h1>
+    
+    {% if masters %}
+        <ul class="list-topic">
+            {% for m in masters %}
+                <li>
+                    <h2><a href="{{ m.get_absolute_url }}">{{ m.name }}</a></h2>
+                    <p>{{ m.bio|truncatewords:15 }}</p>
+                    <p class="link-read-post"><a href="{{ m.get_absolute_url }}">Читать биографию</a></p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="quote">В наших архивах пока нет записей о выдающихся мастерах этого столетия.</p>
+    {% endif %}
+{% endblock %}

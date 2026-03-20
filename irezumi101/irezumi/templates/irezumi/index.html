@@ -1,0 +1,21 @@
+{% extends 'irezumi/base.html' %}
+
+{% block content %}
+    <h1>Классические мотивы Ирэдзуми</h1>
+    <ul class="content-table">
+        {% for m in motifs %}
+            <li>
+                <h2><a href="{{ m.get_absolute_url }}">{{ m.title }}</a></h2>
+                <p>{{ m.content|truncatewords:15 }}</p>
+
+                <div class="article-panel">
+                    <p class="first">Категория: Мотивы</p>
+                    <p class="last"><a href="{% url 'motif' m.slug %}">Читать легенду</a></p>
+                </div>
+                {% if not forloop.last %}
+                    <hr>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

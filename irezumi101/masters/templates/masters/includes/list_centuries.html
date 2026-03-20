@@ -1,0 +1,7 @@
+{% for c in centuries %}
+    {% if c.id == century_selected %}
+        <li class="selected">{{ c.name }}</li>
+    {% else %}
+        <li><a href="{% url 'masters_century' c.id %}">{{ c.name }}</a></li>
+    {% endif %}
+{% endfor %}

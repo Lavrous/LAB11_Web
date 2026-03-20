@@ -1,0 +1,24 @@
+{% extends 'irezumi/base.html' %}
+
+{% block breadcrumbs %}
+    <li><a href="{% url 'masters_century' master.century %}">Мастера {{ master.century }} века</a></li>
+    <li>{{ master.name }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="topic-subject">
+        <div class="topic-line"></div>
+        <div class="topic-text">{{ master.name }}</div>
+    </div>
+    
+    <div class="content-text">
+        <p><strong>Эпоха работы:</strong> {{ master.century }}-й век</p>
+        
+        <div class="highlight">
+            <p><strong>Биография:</strong></p>
+            {% autoescape off %}
+                {{ master.bio|linebreaks }}
+            {% endautoescape %}
+        </div>
+    </div>
+{% endblock %}

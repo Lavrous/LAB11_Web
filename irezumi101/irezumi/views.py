@@ -1,25 +1,36 @@
-from django.shortcuts import render
-# irezumi/views.py
-from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import render, get_object_or_404
+from django.http import Http404
+from .models import Motif
+
+menu = [
+    {'title': 'Главная', 'url_name': 'home'},
+    {'title': 'Мастера', 'url_name': 'masters_home'},
+]
+
 
 def index(request):
-    return HttpResponse("""
-        <h1>Irezumi 101: Искусство японской татуировки</h1>
-        <p>Добро пожаловать в мир Ирэдзуми. Выберите мотив или узнайте о великих мастерах.</p>
-    """)
+    motifs = Motif.published.all()
 
-def tattoo_detail(request, tattoo_slug):
-    if request.GET:
-        print("Пользователь передал GET-параметры:", request.GET)
+    context = {
+        'title': 'Irezumi 101: Главная',
+        'menu': menu,
+        'motifs': motifs,
+        'century_selected': 0,
+    }
+    return render(request, 'irezumi/index.html', context)
 
-    return HttpResponse(f"""
-        <h1>Мотив: {tattoo_slug.capitalize()}</h1>
-        <div style="border: 1px solid #000; padding: 10px; width: 300px; height: 300px;">
-            [Здесь будет картинка татуировки {tattoo_slug}]
-        </div>
-        <h2>Легенда и значение</h2>
-        <p>Традиционно, {tattoo_slug} символизирует определенные качества в японской мифологии...</p>
-    """)
+
+def motif_detail(request, motif_slug):
+    motif = get_object_or_404(Motif, slug=motif_slug)
+
+    context = {
+        'title': motif.title,
+        'menu': menu,
+        'motif': motif,
+        'century_selected': 0,
+    }
+    return render(request, 'irezumi/motif_detail.html', context)
+
 
 def page_not_found(request, exception):
-    return HttpResponseNotFound('<h1>404: Страница не найдена</h1><p>Дальше только драконы.</p>')
+    return render(request, 'irezumi/404.html', status=404)
