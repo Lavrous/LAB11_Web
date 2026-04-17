@@ -1,0 +1,67 @@
+
+#header {
+    background: #3F4137;
+    border-bottom: 2px solid #FDA83D;
+}
+
+#header a:link, #header a:visited, #branding h1 {
+    color: #FDA83D;
+}
+
+#header a:hover {
+    color: #F0711C;
+}
+
+div.breadcrumbs {
+    background: #eee;
+    color: #444;
+    border-bottom: 1px solid #ccc;
+}
+
+div.breadcrumbs a {
+    color: #0059b2;
+}
+
+div.breadcrumbs a:hover {
+    color: #CC0000;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background: #333671 !important;
+    color: #fff !important;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #CC0000 !important;
+    color: #fff !important;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.button:hover, input[type=submit]:hover {
+    background: #FDA83D !important;
+}
+
+.results table th a:link, .results table th a:visited,
+.results table td a:link, .results table td a:visited {
+    color: #BB5715;
+}
+
+.results table a:hover {
+    color: #F0711C;
+    text-decoration: underline;
+}
+
+tr.selected td, tr.selected th {
+    background-color: #fff3e6 !important;
+}
+
+#result_list tr:hover td {
+    background-color: #f9f9f9;
+}
+
+#changelist-filter h2 {
+    background: #3F4137; /* Темный заголовок фильтров */
+    color: #FDA83D;
+}

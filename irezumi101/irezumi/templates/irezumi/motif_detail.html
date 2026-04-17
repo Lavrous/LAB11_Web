@@ -6,7 +6,19 @@
 {% endblock %}
 
 {% block content %}
+    {% with motif.tags.all as tags %}
+        {% if tags %}
+            <ul class="tags-list">
+                <li>Теги:</li>
+                {% for t in tags %}
+                    <li><a href="{{ t.get_absolute_url }}">{{ t.tag }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
     <h1>{{ motif.title }}</h1>
+
     {% if motif.image %}
         <img src="{% static motif.image %}" class="img-article-left" alt="{{ motif.title }}">
     {% endif %}

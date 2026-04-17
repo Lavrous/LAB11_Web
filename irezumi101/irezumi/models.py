@@ -7,6 +7,32 @@ class PublishedManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_published=Motif.Status.PUBLISHED)
 
+class Category(models.Model):
+    name = models.CharField(max_length=100, db_index=True, verbose_name="Категория")
+    slug = models.SlugField(max_length=255, unique=True, db_index=True)
+
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'cat_slug': self.slug})
+
+class TagPost(models.Model):
+    tag = models.CharField(max_length=100, db_index=True, verbose_name="Тег")
+    slug = models.SlugField(max_length=255, unique=True, db_index=True)
+
+    def __str__(self):
+        return self.tag
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
+    def get_absolute_url(self):
+        return reverse('tag', kwargs={'tag_slug': self.slug})
+
 
 class Motif(models.Model):
     class Status(models.IntegerChoices):
@@ -28,6 +54,10 @@ class Motif(models.Model):
         verbose_name="Статус публикации"
     )
 
+    views_count = models.IntegerField(default=0, verbose_name="Просмотры")
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, related_name='motifs',
+                            verbose_name="Категория")
+    tags = models.ManyToManyField('TagPost', blank=True, related_name='motifs', verbose_name="Теги")
     objects = models.Manager()
     published = PublishedManager()
 

@@ -1,0 +1,8 @@
+{% if tags %}
+    <p style="margin-top:20px; color:#999;">Темы мотивов:</p>
+    <ul class="tags-list">
+        {% for t in tags %}
+            <li><a href="{{ t.get_absolute_url }}">{{ t.tag }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}

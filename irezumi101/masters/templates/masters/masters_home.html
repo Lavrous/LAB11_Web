@@ -1,8 +1,40 @@
 {% extends 'irezumi/base.html' %}
 
 {% block content %}
-    <h1>Мастера Ирэдзуми</h1>
-    <p class="content-text">
-        Выберите век в боковом меню слева, чтобы узнать о великих хориши (мастерах татуировки) соответствующей эпохи.
-    </p>
+    <h1>Мастера Ирэдзуми (Хориши)</h1>
+
+    <div class="quote">
+        <p>Наша база хранит хроники мастеров, начиная с <b>{{ earliest }} века</b> и заканчивая <b>{{ latest }} веком</b>.</p>
+    </div>
+
+    <div style="background: #fdfaf0; border-left: 5px solid #CC0000; padding: 25px; margin: 40px 0; border-radius: 0 10px 10px 0;">
+        <h2 style="margin: 0 0 10px 0; color: #CC0000; font-family: 'Georgia', serif; text-transform: uppercase; letter-spacing: 1px;">
+            Особое упоминание
+        </h2>
+        <p style="font-size: 14px; color: #888; margin-bottom: 20px; font-style: italic;">
+            Критерий выборки: великие хориши XX века или мастера, сохранившие наследие эпохи Эдо.
+        </p>
+
+        <ul class="tags-list">
+            {% for fm in featured_masters %}
+                <li style="margin-right: 15px;">
+                    <a href="{{ fm.get_absolute_url }}" style="background: #fff; border: 1px solid #CC0000; color: #333; padding: 8px 15px; font-weight: bold;">
+                        {{ fm.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <h2 style="margin-top: 40px; color: #0059b2;">Все мастера</h2>
+    <ul class="list-topic" style="margin-top: 10px;">
+        {% for am in annotated_masters %}
+            <li style="margin-bottom: 20px;">
+                <h3><a href="{{ am.get_absolute_url }}">{{ am.name }}</a></h3>
+                <p style="font-size: 14px; color: #777;">
+                    Статус: <b>{{ am.badge }}</b> | Длина биографии: <b>{{ am.bio_len }} символов</b>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

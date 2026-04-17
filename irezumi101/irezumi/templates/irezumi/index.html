@@ -2,16 +2,30 @@
 
 {% block content %}
     <h1>Классические мотивы Ирэдзуми</h1>
+    <p style="color: #BB5715; font-weight: bold;">
+        Всего в нашей базе классических мотивов: {{ total_motifs }}
+    </p>
     <ul class="content-table">
         {% for m in motifs %}
             <li>
+                <div class="article-panel">
+    <p class="first">
+        <b>Категория:</b> {{ m.cat.name|default:"Без категории" }}
+        <span style="color: #ccc; margin: 0 10px;">|</span>
+        <b>Обновлено:</b> {{ m.time_update|date:"d.m.Y" }}
+    </p>
+    <p class="last">
+        <i class="views-icon">Просмотры: </i> {{ m.views_count }}
+    </p>
+</div>
+
                 <h2><a href="{{ m.get_absolute_url }}">{{ m.title }}</a></h2>
                 <p>{{ m.content|truncatewords:15 }}</p>
 
-                <div class="article-panel">
-                    <p class="first">Категория: Мотивы</p>
-                    <p class="last"><a href="{% url 'motif' m.slug %}">Читать легенду</a></p>
-                </div>
+                <p class="link-read-post">
+                    <a href="{{ m.get_absolute_url }}">Читать легенду</a>
+                </p>
+
                 {% if not forloop.last %}
                     <hr>
                 {% endif %}

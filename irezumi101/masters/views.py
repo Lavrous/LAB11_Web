@@ -1,6 +1,8 @@
 # masters/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
+from django.db.models import Q, Min, Max, Value, CharField
+from django.db.models.functions import Length
 from .models import Master
 
 menu = [
@@ -9,6 +11,12 @@ menu = [
 ]
 
 def masters_home(request):
+    century_stats = Master.objects.aggregate(earliest=Min('century'), latest=Max('century'))
+    featured_masters = Master.objects.filter(Q(century=20) | Q(bio__icontains='Эдо'))
+    annotated_masters = Master.objects.annotate(
+        badge=Value('Великий Хориши', output_field=CharField()),
+        bio_len=Length('bio')
+    )
     menu = [
         {'title': 'О сайте', 'url_name': 'home'},
         {'title': 'Мастера', 'url_name': 'masters_home'},
@@ -17,6 +25,10 @@ def masters_home(request):
         'title': 'Мастера Ирэдзуми',
         'menu': menu,
         'century_selected': 0,
+        'earliest': century_stats['earliest'],
+        'latest': century_stats['latest'],
+        'featured_masters': featured_masters,
+        'annotated_masters': annotated_masters,
     }
     return render(request, 'masters/masters_home.html', context)
 def masters_by_century(request, century):
