@@ -407,3 +407,65 @@ ul.lang-list li a:hover {color: #fdc073;}
     min-width: 200px;
     font-size: 16px;
 }
+
+nav.list-pages {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+nav.list-pages ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
+    gap: 10px;
+}
+
+nav.list-pages ul li {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.page-num a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 15px;
+    background: #eee;
+    color: #0059b2;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.page-num a:hover {
+    background: #FDA83D;
+    color: #fff;
+    border-color: #FDA83D;
+    text-decoration: none;
+}
+
+.page-num-selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 15px;
+    background: #333671;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #333671;
+    font-size: 18px;
+    cursor: default;
+}

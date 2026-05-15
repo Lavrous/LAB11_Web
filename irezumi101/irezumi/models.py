@@ -1,7 +1,16 @@
 # irezumi/models.py
 from django.db import models
 from django.urls import reverse
+from datetime import datetime
+import uuid
+import os
 
+def get_image_path(instance, filename):
+    ext = filename.split('.')[-1]
+    random_name = f"{uuid.uuid4()}.{ext}"
+    now = datetime.now()
+    date_path = now.strftime("%Y/%m/%d")
+    return os.path.join('photos', date_path, random_name)
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -43,7 +52,12 @@ class Motif(models.Model):
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL-слаг")
     content = models.TextField(blank=True, verbose_name="Легенда и значение")
 
-    image = models.CharField(max_length=255, blank=True, default='', verbose_name="Путь к картинке")
+    image = models.ImageField(
+        upload_to=get_image_path,
+        blank=True,
+        null=True,
+        verbose_name="Изображение мотива"
+    )
 
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения")

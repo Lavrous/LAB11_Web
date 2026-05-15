@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from django.contrib import messages
 from .models import Motif, Category, TagPost
 
@@ -21,7 +22,7 @@ class HasImageFilter(admin.SimpleListFilter):
 
 @admin.register(Motif)
 class MotifAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'cat', 'is_published', 'time_create', 'brief_info', 'image_status')
+    list_display = ('id', 'title', 'post_photo', 'cat', 'is_published', 'time_create', 'brief_info', 'image_status')
     list_display_links = ('id', 'title')
     list_editable = ('cat', ) # Редактирование прямо в списке
     ordering = ['-time_create', 'title'] # Сортировка
@@ -32,7 +33,7 @@ class MotifAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {"slug": ("title",)}
     filter_horizontal = ['tags']
-    readonly_fields = ['time_create', 'time_update', 'views_count']
+    readonly_fields = ['time_create', 'time_update', 'views_count', 'post_photo']
 
     @admin.display(description="Объем текста", ordering='content')
     def brief_info(self, obj):
@@ -43,6 +44,12 @@ class MotifAdmin(admin.ModelAdmin):
         if obj.image:
             return "✅ Загружена"
         return "❌ Отсутствует"
+
+    @admin.display(description="Изображение")
+    def post_photo(self, obj):
+        if obj.image:
+            return mark_safe(f"<img src='{obj.image.url}' width='50'>")
+        return "Без фото"
 
     @admin.action(description="Опубликовать выбранные мотивы")
     def set_published(self, request, queryset):

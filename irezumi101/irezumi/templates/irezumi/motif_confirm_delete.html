@@ -1,0 +1,26 @@
+{% extends 'irezumi/base.html' %}
+
+{% block content %}
+    <div class="topic-subject">
+        <div class="topic-line"></div>
+        <div class="topic-text">Подтверждение удаления</div>
+    </div>
+
+    <div class="content-text">
+        <p>Вы собираетесь навсегда стереть из архивов мотив: <b style="color: #CC0000;">{{ motif.title }}</b>?</p>
+
+        <form method="post" style="margin-top: 30px;">
+            {% csrf_token %}
+            <button type="submit" class="button form-button"
+                    style="background: #CC0000; border: none; color: #fff; cursor: pointer; height: 40px; margin-right: 10px;">
+                Удалить навсегда
+            </button>
+
+            <a href="{{ motif.get_absolute_url }}" class="button form-button"
+               style="display: inline-block; background: #3F4137; color: #fdc073; text-decoration: none;
+                      text-align: center; line-height: 30px; vertical-align: top; height: 40px; box-sizing: border-box;">
+                Отмена
+            </a>
+        </form>
+    </div>
+{% endblock %}

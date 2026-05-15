@@ -8,6 +8,7 @@ from .models import Master
 menu = [
     {'title': 'Главная', 'url_name': 'home'},
     {'title': 'Мастера', 'url_name': 'masters_home'},
+    {'title': 'Добавить мотив', 'url_name': 'add_motif'},
 ]
 
 def masters_home(request):
@@ -18,8 +19,9 @@ def masters_home(request):
         bio_len=Length('bio')
     )
     menu = [
-        {'title': 'О сайте', 'url_name': 'home'},
+        {'title': 'Главная', 'url_name': 'home'},
         {'title': 'Мастера', 'url_name': 'masters_home'},
+        {'title': 'Добавить мотив', 'url_name': 'add_motif'},
     ]
     context = {
         'title': 'Мастера Ирэдзуми',

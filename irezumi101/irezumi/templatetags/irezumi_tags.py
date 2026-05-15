@@ -9,6 +9,7 @@ def get_menu():
     return [
         {'title': 'Главная', 'url_name': 'home'},
         {'title': 'Мастера', 'url_name': 'masters_home'},
+        {'title': 'Добавить мотив', 'url_name': 'add_motif'},
     ]
 
 @register.inclusion_tag('irezumi/includes/list_categories.html')
