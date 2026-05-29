@@ -17,6 +17,12 @@
         {% endif %}
     {% endwith %}
 
+    {% if perms.irezumi.change_motif %}
+        <div style="background: #eee; padding: 10px; text-align: right; margin-bottom: 20px;">
+            <span style="color: #CC0000; font-weight: bold;">Режим редактора: </span>
+            <a href="{% url 'edit_motif' motif.slug %}" class="button" style="padding: 5px 15px;">Редактировать мотив</a>
+        </div>
+    {% endif %}
     <h1>{{ motif.title }}</h1>
 
     {% if motif.image %}

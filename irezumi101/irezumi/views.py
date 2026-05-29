@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.views.generic.edit import FormView
 from django.views import View
 from .forms import AddMotifForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Motif, Category, TagPost
 from .utils import DataMixin
 
