@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
 from django.utils.deconstruct import deconstructible
-from .models import Motif, Category
+from .models import Motif, Category, Comment
 
 @deconstructible
 class NoNumbersValidator:
@@ -37,3 +37,16 @@ class AddMotifForm(forms.ModelForm):
         if len(title) > 50:
             raise ValidationError('Длина названия превышает 50 символов')
         return title
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'form-input',
+                'rows': 3,
+                'placeholder': 'Оставьте свой комментарий...'
+            }),
+        }
+        labels = {'content': ''}

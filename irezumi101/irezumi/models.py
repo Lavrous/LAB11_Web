@@ -1,6 +1,7 @@
 # irezumi/models.py
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 from datetime import datetime
 import uuid
 import os
@@ -51,6 +52,9 @@ class Motif(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название мотива")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL-слаг")
     content = models.TextField(blank=True, verbose_name="Легенда и значение")
+    likes = models.ManyToManyField(get_user_model(), related_name='liked_motifs', blank=True, verbose_name="Лайки")
+    dislikes = models.ManyToManyField(get_user_model(), related_name='disliked_motifs', blank=True,
+                                      verbose_name="Дизлайки")
 
     image = models.ImageField(
         upload_to=get_image_path,
@@ -58,7 +62,6 @@ class Motif(models.Model):
         null=True,
         verbose_name="Изображение мотива"
     )
-
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения")
 
@@ -88,3 +91,17 @@ class Motif(models.Model):
 
     def get_absolute_url(self):
         return reverse('motif', kwargs={'motif_slug': self.slug})
+
+class Comment(models.Model):
+    motif = models.ForeignKey(Motif, on_delete=models.CASCADE, related_name='comments', verbose_name="Мотив")
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name="Автор")
+    content = models.TextField(verbose_name="Текст комментария")
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время написания")
+
+    class Meta:
+        ordering = ['-time_create']
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
+
+    def __str__(self):
+        return f"Комментарий от {self.author.username}"

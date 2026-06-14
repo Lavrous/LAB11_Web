@@ -3,8 +3,14 @@
 {% block content %}
     <h1>Классические мотивы Ирэдзуми</h1>
     <p style="color: #BB5715; font-weight: bold;">
-        Всего в нашей базе классических мотивов: {{ total_motifs }}
-    </p>
+    {% if category %} >
+        Всего мотивов в категории "{{ category.name }}": {{ paginator.count }}
+    {% elif tag %}
+        Всего мотивов с тегом "{{ tag.tag }}": {{ paginator.count }}
+    {% else %}
+        Всего в нашей базе классических мотивов: {{ paginator.count }}
+    {% endif %}
+</p>
     <ul class="content-table">
         {% for m in motifs %}
             <li>
